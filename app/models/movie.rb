@@ -10,4 +10,8 @@ class Movie < ApplicationRecord
       where(rating: ratings.map(&:upcase)).order sort_by
     end
   end
+  def self.all_ratings
+  ['G', 'PG', 'PG-13', 'R', 'NC-17']
+  end
 end
+

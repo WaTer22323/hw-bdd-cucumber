@@ -24,13 +24,31 @@ Background: movies have been added to database
 
 Scenario: restrict to movies with "PG" or "R" ratings
   When I check the following ratings: PG, R
-  # enter step(s) to check the "PG" and "R" checkboxes
-  # enter step(s) to uncheck all other checkboxes
-  # enter step to "submit" the search form on the homepage
-  # enter step(s) to ensure that PG and R movies are visible
-  # enter step(s) to ensure that other movies are not visible
-  Then complete the rest of of this scenario
+  Scenario: restrict to movies with "PG" or "R" ratings
+  # 1. เลือก Rating ที่ต้องการ (PG, R)
+  When I check the following ratings: PG, R
+  # 2. เอาติ๊ก Rating ที่ไม่ต้องการออก (G, PG-13)
+  And I uncheck the following ratings: G, PG-13
+  # 3. กดปุ่ม Refresh เพื่อกรองข้อมูล
+  And I press "Refresh"
+  # 4. ตรวจสอบว่าต้อง 'เจอ' หนังที่เป็น PG และ R
+  Then I should see the following movies: The Incredibles, Raiders of the Lost Ark, The Terminator, When Harry Met Sally, Amelie
+  # 5. ตรวจสอบว่าต้อง 'ไม่เจอ' หนังที่เป็น G และ PG-13
+  And I should not see the following movies: Aladdin, The Help, Chocolat, 2001: A Space Odyssey, Chicken Run
 
 Scenario: all ratings selected
-  # your steps here
-  Then complete the rest of of this scenario
+  # 1. เลือกทุก Rating
+  When I check the following ratings: G, PG, PG-13, R
+  # 2. กดปุ่ม Refresh
+  And I press "Refresh"
+  # 3. ตรวจสอบว่าต้องเจอหนังครบทุกเรื่อง
+  Then I should see all the movies
+
+Scenario: all ratings selected
+  Scenario: all ratings selected
+  Given I am on the RottenPotatoes home page
+  When I check the following ratings: G, PG, PG-13, NC-17, R
+  And I press "Refresh"
+  Then I should see all the movies
+
+

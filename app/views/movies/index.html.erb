@@ -4,7 +4,7 @@
   Include:
   <% @all_ratings.each do |rating| %>
     <div class="form-check  form-check-inline">
-      <%= check_box_tag "ratings[#{rating}]", "1", @ratings_to_show.include?(rating), class: 'form-check-input' %>
+      <%= check_box_tag "ratings[#{rating}]", "1",  @ratings_to_show.include?(rating), id: "ratings_#{rating}" %>
       <%= label_tag "ratings[#{rating}]", rating, class: 'form-check-label' %>
     </div>
   <% end %>
@@ -22,6 +22,34 @@
 <% end %>
 
 <h1>Movies</h1>
+
+<table class="table table-striped col-md-12" id="movies">
+  <thead>
+    <tr>
+      <th class="<%= 'hilite' if @sort == 'title' %>" id="title_header">
+        <%= link_to "Movie Title", movies_path(sort: 'title', ratings: @ratings_to_show) %>
+      </th>
+
+      <th>Rating</th>
+
+      <th class="<%= 'hilite' if @sort == 'release_date' %>" id="release_date_header">
+        <%= link_to "Release Date", movies_path(sort: 'release_date', ratings: @ratings_to_show) %>
+      </th>
+
+      <th>More Info</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @movies.each do |movie| %>
+      <tr>
+        <td><%= movie.title %></td>
+        <td><%= movie.rating %></td>
+        <td><%= movie.release_date %></td>
+        <td><%= link_to "More about #{movie.title}", movie_path(movie) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 
 <div id="movies">
   <% @movies.each do |movie| %>

@@ -23,11 +23,11 @@ Background: movies have been added to database
   Then 10 seed movies should exist
 
 Scenario: sort movies alphabetically
-  When I select "Title" from "sort_by"
-  # your steps here
-  Then complete the rest of of this scenario
+  Given I am on the RottenPotatoes home page
+  When I follow "Movie Title"
+  Then I should see "Aladdin" before "Amelie"
 
 Scenario: sort movies in increasing order of release date
-  When I select "Release date" from "sort_by"
-  # your steps here
-  Then complete the rest of of this scenario
+  Given I am on the RottenPotatoes home page
+  When I follow "Release Date"
+  Then I should see "2001: A Space Odyssey" before "Raiders of the Lost Ark"
